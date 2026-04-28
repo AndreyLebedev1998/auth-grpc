@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "https://github.com/AndreyLebedev1998/auth-grpc/auth";
+
+message ChatIdTgUser {
+    string token = 1;
+    int64 chat_id = 2;
+}
+
+message MessageForUpdateTgUser {
+    string msg = 1;
+}
+
+message ParamUser {
+    int64 paramUser = 1;
+}
+
+message ChatId {
+    int64 chat_id = 1;
+}
+
+service AuthService {
+    rpc UpdateChatIdTgUser(ChatIdTgUser) returns (MessageForUpdateTgUser);
+    rpc GetChatIdForUser(ParamUser) returns (ChatId);
+}
