@@ -119,7 +119,9 @@ func (x *MessageForUpdateTgUser) GetMsg() string {
 
 type ParamUser struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ParamUser     int64                  `protobuf:"varint,1,opt,name=paramUser,proto3" json:"paramUser,omitempty"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Phone         string                 `protobuf:"bytes,2,opt,name=phone,proto3" json:"phone,omitempty"`
+	Id            int64                  `protobuf:"varint,3,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -154,9 +156,23 @@ func (*ParamUser) Descriptor() ([]byte, []int) {
 	return file_auth_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ParamUser) GetParamUser() int64 {
+func (x *ParamUser) GetEmail() string {
 	if x != nil {
-		return x.ParamUser
+		return x.Email
+	}
+	return ""
+}
+
+func (x *ParamUser) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *ParamUser) GetId() int64 {
+	if x != nil {
+		return x.Id
 	}
 	return 0
 }
@@ -215,9 +231,11 @@ const file_auth_proto_rawDesc = "" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x17\n" +
 	"\achat_id\x18\x02 \x01(\x03R\x06chatId\"*\n" +
 	"\x16MessageForUpdateTgUser\x12\x10\n" +
-	"\x03msg\x18\x01 \x01(\tR\x03msg\")\n" +
-	"\tParamUser\x12\x1c\n" +
-	"\tparamUser\x18\x01 \x01(\x03R\tparamUser\"!\n" +
+	"\x03msg\x18\x01 \x01(\tR\x03msg\"G\n" +
+	"\tParamUser\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x14\n" +
+	"\x05phone\x18\x02 \x01(\tR\x05phone\x12\x0e\n" +
+	"\x02id\x18\x03 \x01(\x03R\x02id\"!\n" +
 	"\x06ChatId\x12\x17\n" +
 	"\achat_id\x18\x01 \x01(\x03R\x06chatId2\x88\x01\n" +
 	"\vAuthService\x12F\n" +

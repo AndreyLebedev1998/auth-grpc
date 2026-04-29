@@ -14,7 +14,9 @@ message MessageForUpdateTgUser {
 }
 
 message ParamUser {
-    int64 paramUser = 1;
+    string email = 1;
+    string phone = 2;
+    int64 id = 3;
 }
 
 message ChatId {
