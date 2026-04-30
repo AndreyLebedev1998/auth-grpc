@@ -23,7 +23,17 @@ message ChatId {
     int64 chat_id = 1;
 }
 
+message NewTelegramToken {
+    string token = 1;
+}
+
+message TelegramToken {
+    int64 id = 1;
+    string token = 2;
+}
+
 service AuthService {
     rpc UpdateChatIdTgUser(ChatIdTgUser) returns (MessageForUpdateTgUser);
     rpc GetChatIdForUser(ParamUser) returns (ChatId);
+    rpc AddTelegramToken(NewTelegramToken) returns (TelegramToken);
 }
