@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_UpdateChatIdTgUser_FullMethodName = "/auth.AuthService/UpdateChatIdTgUser"
-	AuthService_GetChatIdForUser_FullMethodName   = "/auth.AuthService/GetChatIdForUser"
-	AuthService_AddTelegramToken_FullMethodName   = "/auth.AuthService/AddTelegramToken"
-	AuthService_GetTelegramToken_FullMethodName   = "/auth.AuthService/GetTelegramToken"
+	AuthService_UpdateChatIdTgUser_FullMethodName  = "/auth.AuthService/UpdateChatIdTgUser"
+	AuthService_GetChatIdForUser_FullMethodName    = "/auth.AuthService/GetChatIdForUser"
+	AuthService_AddTelegramToken_FullMethodName    = "/auth.AuthService/AddTelegramToken"
+	AuthService_GetTelegramToken_FullMethodName    = "/auth.AuthService/GetTelegramToken"
+	AuthService_RemoveTelegramToken_FullMethodName = "/auth.AuthService/RemoveTelegramToken"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -33,6 +34,7 @@ type AuthServiceClient interface {
 	GetChatIdForUser(ctx context.Context, in *ParamUser, opts ...grpc.CallOption) (*ChatId, error)
 	AddTelegramToken(ctx context.Context, in *NewTelegramToken, opts ...grpc.CallOption) (*TelegramToken, error)
 	GetTelegramToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TelegramToken, error)
+	RemoveTelegramToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Message, error)
 }
 
 type authServiceClient struct {
@@ -83,6 +85,16 @@ func (c *authServiceClient) GetTelegramToken(ctx context.Context, in *Empty, opt
 	return out, nil
 }
 
+func (c *authServiceClient) RemoveTelegramToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Message, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Message)
+	err := c.cc.Invoke(ctx, AuthService_RemoveTelegramToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type AuthServiceServer interface {
 	GetChatIdForUser(context.Context, *ParamUser) (*ChatId, error)
 	AddTelegramToken(context.Context, *NewTelegramToken) (*TelegramToken, error)
 	GetTelegramToken(context.Context, *Empty) (*TelegramToken, error)
+	RemoveTelegramToken(context.Context, *Empty) (*Message, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedAuthServiceServer) AddTelegramToken(context.Context, *NewTele
 }
 func (UnimplementedAuthServiceServer) GetTelegramToken(context.Context, *Empty) (*TelegramToken, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetTelegramToken not implemented")
+}
+func (UnimplementedAuthServiceServer) RemoveTelegramToken(context.Context, *Empty) (*Message, error) {
+	return nil, status.Error(codes.Unimplemented, "method RemoveTelegramToken not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -206,6 +222,24 @@ func _AuthService_GetTelegramToken_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_RemoveTelegramToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).RemoveTelegramToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_RemoveTelegramToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).RemoveTelegramToken(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTelegramToken",
 			Handler:    _AuthService_GetTelegramToken_Handler,
+		},
+		{
+			MethodName: "RemoveTelegramToken",
+			Handler:    _AuthService_RemoveTelegramToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

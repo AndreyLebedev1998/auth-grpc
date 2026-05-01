@@ -317,6 +317,50 @@ func (x *TelegramToken) GetToken() string {
 	return ""
 }
 
+type Message struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Message) Reset() {
+	*x = Message{}
+	mi := &file_auth_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message) ProtoMessage() {}
+
+func (x *Message) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Message.ProtoReflect.Descriptor instead.
+func (*Message) Descriptor() ([]byte, []int) {
+	return file_auth_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Message) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -325,7 +369,7 @@ type Empty struct {
 
 func (x *Empty) Reset() {
 	*x = Empty{}
-	mi := &file_auth_proto_msgTypes[6]
+	mi := &file_auth_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -337,7 +381,7 @@ func (x *Empty) String() string {
 func (*Empty) ProtoMessage() {}
 
 func (x *Empty) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_proto_msgTypes[6]
+	mi := &file_auth_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -350,7 +394,7 @@ func (x *Empty) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Empty.ProtoReflect.Descriptor instead.
 func (*Empty) Descriptor() ([]byte, []int) {
-	return file_auth_proto_rawDescGZIP(), []int{6}
+	return file_auth_proto_rawDescGZIP(), []int{7}
 }
 
 var File_auth_proto protoreflect.FileDescriptor
@@ -374,13 +418,16 @@ const file_auth_proto_rawDesc = "" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"5\n" +
 	"\rTelegramToken\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\"\a\n" +
-	"\x05Empty2\xff\x01\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\"#\n" +
+	"\aMessage\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\a\n" +
+	"\x05Empty2\xb2\x02\n" +
 	"\vAuthService\x12F\n" +
 	"\x12UpdateChatIdTgUser\x12\x12.auth.ChatIdTgUser\x1a\x1c.auth.MessageForUpdateTgUser\x121\n" +
 	"\x10GetChatIdForUser\x12\x0f.auth.ParamUser\x1a\f.auth.ChatId\x12?\n" +
 	"\x10AddTelegramToken\x12\x16.auth.NewTelegramToken\x1a\x13.auth.TelegramToken\x124\n" +
-	"\x10GetTelegramToken\x12\v.auth.Empty\x1a\x13.auth.TelegramTokenB5Z3https://github.com/AndreyLebedev1998/auth-grpc/authb\x06proto3"
+	"\x10GetTelegramToken\x12\v.auth.Empty\x1a\x13.auth.TelegramToken\x121\n" +
+	"\x13RemoveTelegramToken\x12\v.auth.Empty\x1a\r.auth.MessageB5Z3https://github.com/AndreyLebedev1998/auth-grpc/authb\x06proto3"
 
 var (
 	file_auth_proto_rawDescOnce sync.Once
@@ -394,7 +441,7 @@ func file_auth_proto_rawDescGZIP() []byte {
 	return file_auth_proto_rawDescData
 }
 
-var file_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_auth_proto_goTypes = []any{
 	(*ChatIdTgUser)(nil),           // 0: auth.ChatIdTgUser
 	(*MessageForUpdateTgUser)(nil), // 1: auth.MessageForUpdateTgUser
@@ -402,19 +449,22 @@ var file_auth_proto_goTypes = []any{
 	(*ChatId)(nil),                 // 3: auth.ChatId
 	(*NewTelegramToken)(nil),       // 4: auth.NewTelegramToken
 	(*TelegramToken)(nil),          // 5: auth.TelegramToken
-	(*Empty)(nil),                  // 6: auth.Empty
+	(*Message)(nil),                // 6: auth.Message
+	(*Empty)(nil),                  // 7: auth.Empty
 }
 var file_auth_proto_depIdxs = []int32{
 	0, // 0: auth.AuthService.UpdateChatIdTgUser:input_type -> auth.ChatIdTgUser
 	2, // 1: auth.AuthService.GetChatIdForUser:input_type -> auth.ParamUser
 	4, // 2: auth.AuthService.AddTelegramToken:input_type -> auth.NewTelegramToken
-	6, // 3: auth.AuthService.GetTelegramToken:input_type -> auth.Empty
-	1, // 4: auth.AuthService.UpdateChatIdTgUser:output_type -> auth.MessageForUpdateTgUser
-	3, // 5: auth.AuthService.GetChatIdForUser:output_type -> auth.ChatId
-	5, // 6: auth.AuthService.AddTelegramToken:output_type -> auth.TelegramToken
-	5, // 7: auth.AuthService.GetTelegramToken:output_type -> auth.TelegramToken
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	7, // 3: auth.AuthService.GetTelegramToken:input_type -> auth.Empty
+	7, // 4: auth.AuthService.RemoveTelegramToken:input_type -> auth.Empty
+	1, // 5: auth.AuthService.UpdateChatIdTgUser:output_type -> auth.MessageForUpdateTgUser
+	3, // 6: auth.AuthService.GetChatIdForUser:output_type -> auth.ChatId
+	5, // 7: auth.AuthService.AddTelegramToken:output_type -> auth.TelegramToken
+	5, // 8: auth.AuthService.GetTelegramToken:output_type -> auth.TelegramToken
+	6, // 9: auth.AuthService.RemoveTelegramToken:output_type -> auth.Message
+	5, // [5:10] is the sub-list for method output_type
+	0, // [0:5] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -431,7 +481,7 @@ func file_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_auth_proto_rawDesc), len(file_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
