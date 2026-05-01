@@ -32,8 +32,11 @@ message TelegramToken {
     string token = 2;
 }
 
+message Empty {}
+
 service AuthService {
     rpc UpdateChatIdTgUser(ChatIdTgUser) returns (MessageForUpdateTgUser);
     rpc GetChatIdForUser(ParamUser) returns (ChatId);
     rpc AddTelegramToken(NewTelegramToken) returns (TelegramToken);
+    rpc GetTelegramToken(Empty) returns (TelegramToken);
 }
