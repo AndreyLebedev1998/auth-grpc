@@ -24,6 +24,7 @@ const (
 	AuthService_AddTelegramToken_FullMethodName    = "/auth.AuthService/AddTelegramToken"
 	AuthService_GetTelegramToken_FullMethodName    = "/auth.AuthService/GetTelegramToken"
 	AuthService_RemoveTelegramToken_FullMethodName = "/auth.AuthService/RemoveTelegramToken"
+	AuthService_GetUserFromToken_FullMethodName    = "/auth.AuthService/GetUserFromToken"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -35,6 +36,7 @@ type AuthServiceClient interface {
 	AddTelegramToken(ctx context.Context, in *NewTelegramToken, opts ...grpc.CallOption) (*TelegramToken, error)
 	GetTelegramToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TelegramToken, error)
 	RemoveTelegramToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Message, error)
+	GetUserFromToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*UserId, error)
 }
 
 type authServiceClient struct {
@@ -95,6 +97,16 @@ func (c *authServiceClient) RemoveTelegramToken(ctx context.Context, in *Empty, 
 	return out, nil
 }
 
+func (c *authServiceClient) GetUserFromToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*UserId, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserId)
+	err := c.cc.Invoke(ctx, AuthService_GetUserFromToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type AuthServiceServer interface {
 	AddTelegramToken(context.Context, *NewTelegramToken) (*TelegramToken, error)
 	GetTelegramToken(context.Context, *Empty) (*TelegramToken, error)
 	RemoveTelegramToken(context.Context, *Empty) (*Message, error)
+	GetUserFromToken(context.Context, *Token) (*UserId, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -128,6 +141,9 @@ func (UnimplementedAuthServiceServer) GetTelegramToken(context.Context, *Empty) 
 }
 func (UnimplementedAuthServiceServer) RemoveTelegramToken(context.Context, *Empty) (*Message, error) {
 	return nil, status.Error(codes.Unimplemented, "method RemoveTelegramToken not implemented")
+}
+func (UnimplementedAuthServiceServer) GetUserFromToken(context.Context, *Token) (*UserId, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserFromToken not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -240,6 +256,24 @@ func _AuthService_RemoveTelegramToken_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetUserFromToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Token)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetUserFromToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetUserFromToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetUserFromToken(ctx, req.(*Token))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +300,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveTelegramToken",
 			Handler:    _AuthService_RemoveTelegramToken_Handler,
+		},
+		{
+			MethodName: "GetUserFromToken",
+			Handler:    _AuthService_GetUserFromToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
