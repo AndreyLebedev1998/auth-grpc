@@ -19,12 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_UpdateChatIdTgUser_FullMethodName  = "/auth.AuthService/UpdateChatIdTgUser"
-	AuthService_GetChatIdForUser_FullMethodName    = "/auth.AuthService/GetChatIdForUser"
-	AuthService_AddTelegramToken_FullMethodName    = "/auth.AuthService/AddTelegramToken"
-	AuthService_GetTelegramToken_FullMethodName    = "/auth.AuthService/GetTelegramToken"
-	AuthService_RemoveTelegramToken_FullMethodName = "/auth.AuthService/RemoveTelegramToken"
-	AuthService_GetUserFromToken_FullMethodName    = "/auth.AuthService/GetUserFromToken"
+	AuthService_UpdateChatIdTgUser_FullMethodName     = "/auth.AuthService/UpdateChatIdTgUser"
+	AuthService_GetChatIdForUser_FullMethodName       = "/auth.AuthService/GetChatIdForUser"
+	AuthService_AddTelegramToken_FullMethodName       = "/auth.AuthService/AddTelegramToken"
+	AuthService_GetTelegramToken_FullMethodName       = "/auth.AuthService/GetTelegramToken"
+	AuthService_RemoveTelegramToken_FullMethodName    = "/auth.AuthService/RemoveTelegramToken"
+	AuthService_GetUserFromToken_FullMethodName       = "/auth.AuthService/GetUserFromToken"
+	AuthService_GetUserFromContactInfo_FullMethodName = "/auth.AuthService/GetUserFromContactInfo"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -37,6 +38,7 @@ type AuthServiceClient interface {
 	GetTelegramToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TelegramToken, error)
 	RemoveTelegramToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Message, error)
 	GetUserFromToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*UserId, error)
+	GetUserFromContactInfo(ctx context.Context, in *ContactInfo, opts ...grpc.CallOption) (*UserInfo, error)
 }
 
 type authServiceClient struct {
@@ -107,6 +109,16 @@ func (c *authServiceClient) GetUserFromToken(ctx context.Context, in *Token, opt
 	return out, nil
 }
 
+func (c *authServiceClient) GetUserFromContactInfo(ctx context.Context, in *ContactInfo, opts ...grpc.CallOption) (*UserInfo, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserInfo)
+	err := c.cc.Invoke(ctx, AuthService_GetUserFromContactInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -117,6 +129,7 @@ type AuthServiceServer interface {
 	GetTelegramToken(context.Context, *Empty) (*TelegramToken, error)
 	RemoveTelegramToken(context.Context, *Empty) (*Message, error)
 	GetUserFromToken(context.Context, *Token) (*UserId, error)
+	GetUserFromContactInfo(context.Context, *ContactInfo) (*UserInfo, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -144,6 +157,9 @@ func (UnimplementedAuthServiceServer) RemoveTelegramToken(context.Context, *Empt
 }
 func (UnimplementedAuthServiceServer) GetUserFromToken(context.Context, *Token) (*UserId, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUserFromToken not implemented")
+}
+func (UnimplementedAuthServiceServer) GetUserFromContactInfo(context.Context, *ContactInfo) (*UserInfo, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserFromContactInfo not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -274,6 +290,24 @@ func _AuthService_GetUserFromToken_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetUserFromContactInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ContactInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetUserFromContactInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetUserFromContactInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetUserFromContactInfo(ctx, req.(*ContactInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +338,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserFromToken",
 			Handler:    _AuthService_GetUserFromToken_Handler,
+		},
+		{
+			MethodName: "GetUserFromContactInfo",
+			Handler:    _AuthService_GetUserFromContactInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

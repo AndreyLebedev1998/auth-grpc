@@ -44,6 +44,17 @@ message UserId {
     int64 user_id = 1;
 }
 
+message ContactInfo {
+    string contact = 1;
+    string key = 2;
+}
+
+message UserInfo {
+    int64 user_id = 1;
+    string phone = 2;
+    string email = 3;
+}
+
 message Empty {}
 
 service AuthService {
@@ -53,4 +64,5 @@ service AuthService {
     rpc GetTelegramToken(Empty) returns (TelegramToken);
     rpc RemoveTelegramToken(Empty) returns (Message);
     rpc GetUserFromToken(Token) returns (UserId);
+    rpc GetUserFromContactInfo(ContactInfo) returns (UserInfo);
 }

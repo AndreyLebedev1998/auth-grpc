@@ -449,6 +449,118 @@ func (x *UserId) GetUserId() int64 {
 	return 0
 }
 
+type ContactInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Contact       string                 `protobuf:"bytes,1,opt,name=contact,proto3" json:"contact,omitempty"`
+	Key           string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ContactInfo) Reset() {
+	*x = ContactInfo{}
+	mi := &file_auth_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ContactInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ContactInfo) ProtoMessage() {}
+
+func (x *ContactInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ContactInfo.ProtoReflect.Descriptor instead.
+func (*ContactInfo) Descriptor() ([]byte, []int) {
+	return file_auth_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ContactInfo) GetContact() string {
+	if x != nil {
+		return x.Contact
+	}
+	return ""
+}
+
+func (x *ContactInfo) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+type UserInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Phone         string                 `protobuf:"bytes,2,opt,name=phone,proto3" json:"phone,omitempty"`
+	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserInfo) Reset() {
+	*x = UserInfo{}
+	mi := &file_auth_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserInfo) ProtoMessage() {}
+
+func (x *UserInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserInfo.ProtoReflect.Descriptor instead.
+func (*UserInfo) Descriptor() ([]byte, []int) {
+	return file_auth_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UserInfo) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *UserInfo) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *UserInfo) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
 type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -457,7 +569,7 @@ type Empty struct {
 
 func (x *Empty) Reset() {
 	*x = Empty{}
-	mi := &file_auth_proto_msgTypes[9]
+	mi := &file_auth_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -469,7 +581,7 @@ func (x *Empty) String() string {
 func (*Empty) ProtoMessage() {}
 
 func (x *Empty) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_proto_msgTypes[9]
+	mi := &file_auth_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -482,7 +594,7 @@ func (x *Empty) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Empty.ProtoReflect.Descriptor instead.
 func (*Empty) Descriptor() ([]byte, []int) {
-	return file_auth_proto_rawDescGZIP(), []int{9}
+	return file_auth_proto_rawDescGZIP(), []int{11}
 }
 
 var File_auth_proto protoreflect.FileDescriptor
@@ -512,15 +624,23 @@ const file_auth_proto_rawDesc = "" +
 	"\x05Token\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"!\n" +
 	"\x06UserId\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\"\a\n" +
-	"\x05Empty2\xe1\x02\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\"9\n" +
+	"\vContactInfo\x12\x18\n" +
+	"\acontact\x18\x01 \x01(\tR\acontact\x12\x10\n" +
+	"\x03key\x18\x02 \x01(\tR\x03key\"O\n" +
+	"\bUserInfo\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x14\n" +
+	"\x05phone\x18\x02 \x01(\tR\x05phone\x12\x14\n" +
+	"\x05email\x18\x03 \x01(\tR\x05email\"\a\n" +
+	"\x05Empty2\x9e\x03\n" +
 	"\vAuthService\x12F\n" +
 	"\x12UpdateChatIdTgUser\x12\x12.auth.ChatIdTgUser\x1a\x1c.auth.MessageForUpdateTgUser\x121\n" +
 	"\x10GetChatIdForUser\x12\x0f.auth.ParamUser\x1a\f.auth.ChatId\x12?\n" +
 	"\x10AddTelegramToken\x12\x16.auth.NewTelegramToken\x1a\x13.auth.TelegramToken\x124\n" +
 	"\x10GetTelegramToken\x12\v.auth.Empty\x1a\x13.auth.TelegramToken\x121\n" +
 	"\x13RemoveTelegramToken\x12\v.auth.Empty\x1a\r.auth.Message\x12-\n" +
-	"\x10GetUserFromToken\x12\v.auth.Token\x1a\f.auth.UserIdB5Z3https://github.com/AndreyLebedev1998/auth-grpc/authb\x06proto3"
+	"\x10GetUserFromToken\x12\v.auth.Token\x1a\f.auth.UserId\x12;\n" +
+	"\x16GetUserFromContactInfo\x12\x11.auth.ContactInfo\x1a\x0e.auth.UserInfoB5Z3https://github.com/AndreyLebedev1998/auth-grpc/authb\x06proto3"
 
 var (
 	file_auth_proto_rawDescOnce sync.Once
@@ -534,7 +654,7 @@ func file_auth_proto_rawDescGZIP() []byte {
 	return file_auth_proto_rawDescData
 }
 
-var file_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_auth_proto_goTypes = []any{
 	(*ChatIdTgUser)(nil),           // 0: auth.ChatIdTgUser
 	(*MessageForUpdateTgUser)(nil), // 1: auth.MessageForUpdateTgUser
@@ -545,26 +665,30 @@ var file_auth_proto_goTypes = []any{
 	(*Message)(nil),                // 6: auth.Message
 	(*Token)(nil),                  // 7: auth.Token
 	(*UserId)(nil),                 // 8: auth.UserId
-	(*Empty)(nil),                  // 9: auth.Empty
+	(*ContactInfo)(nil),            // 9: auth.ContactInfo
+	(*UserInfo)(nil),               // 10: auth.UserInfo
+	(*Empty)(nil),                  // 11: auth.Empty
 }
 var file_auth_proto_depIdxs = []int32{
-	0, // 0: auth.AuthService.UpdateChatIdTgUser:input_type -> auth.ChatIdTgUser
-	2, // 1: auth.AuthService.GetChatIdForUser:input_type -> auth.ParamUser
-	4, // 2: auth.AuthService.AddTelegramToken:input_type -> auth.NewTelegramToken
-	9, // 3: auth.AuthService.GetTelegramToken:input_type -> auth.Empty
-	9, // 4: auth.AuthService.RemoveTelegramToken:input_type -> auth.Empty
-	7, // 5: auth.AuthService.GetUserFromToken:input_type -> auth.Token
-	1, // 6: auth.AuthService.UpdateChatIdTgUser:output_type -> auth.MessageForUpdateTgUser
-	3, // 7: auth.AuthService.GetChatIdForUser:output_type -> auth.ChatId
-	5, // 8: auth.AuthService.AddTelegramToken:output_type -> auth.TelegramToken
-	5, // 9: auth.AuthService.GetTelegramToken:output_type -> auth.TelegramToken
-	6, // 10: auth.AuthService.RemoveTelegramToken:output_type -> auth.Message
-	8, // 11: auth.AuthService.GetUserFromToken:output_type -> auth.UserId
-	6, // [6:12] is the sub-list for method output_type
-	0, // [0:6] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: auth.AuthService.UpdateChatIdTgUser:input_type -> auth.ChatIdTgUser
+	2,  // 1: auth.AuthService.GetChatIdForUser:input_type -> auth.ParamUser
+	4,  // 2: auth.AuthService.AddTelegramToken:input_type -> auth.NewTelegramToken
+	11, // 3: auth.AuthService.GetTelegramToken:input_type -> auth.Empty
+	11, // 4: auth.AuthService.RemoveTelegramToken:input_type -> auth.Empty
+	7,  // 5: auth.AuthService.GetUserFromToken:input_type -> auth.Token
+	9,  // 6: auth.AuthService.GetUserFromContactInfo:input_type -> auth.ContactInfo
+	1,  // 7: auth.AuthService.UpdateChatIdTgUser:output_type -> auth.MessageForUpdateTgUser
+	3,  // 8: auth.AuthService.GetChatIdForUser:output_type -> auth.ChatId
+	5,  // 9: auth.AuthService.AddTelegramToken:output_type -> auth.TelegramToken
+	5,  // 10: auth.AuthService.GetTelegramToken:output_type -> auth.TelegramToken
+	6,  // 11: auth.AuthService.RemoveTelegramToken:output_type -> auth.Message
+	8,  // 12: auth.AuthService.GetUserFromToken:output_type -> auth.UserId
+	10, // 13: auth.AuthService.GetUserFromContactInfo:output_type -> auth.UserInfo
+	7,  // [7:14] is the sub-list for method output_type
+	0,  // [0:7] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_auth_proto_init() }
@@ -578,7 +702,7 @@ func file_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_auth_proto_rawDesc), len(file_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
